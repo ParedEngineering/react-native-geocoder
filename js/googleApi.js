@@ -71,7 +71,7 @@ export default {
       return Promise.reject(new Error("invalid apiKey / address"));
     }
 
-    return this.geocodeRequest(`${googleUrl}?key=${apiKey}&address=${encodeURI(address)}&components=country:us}`);
+    return this.geocodeRequest(`${googleUrl}?key=${apiKey}&address=${encodeURI(address)}&components=country:us`);
   },
 
   async geocodeRequest(url) {
