@@ -26,9 +26,6 @@ export default {
       return Promise.reject(new Error("address is null"));
     }
 
-    return RNGeocoder.geocodeAddress(address).catch(err => {
-      if (!this.apiKey || err.code !== 'NOT_AVAILABLE') { throw err; }
-      return GoogleApi.geocodeAddress(this.apiKey, address);
-    });
+    return GoogleApi.geocodeAddress(this.apiKey, address);
   },
 }
