@@ -66,22 +66,25 @@ export default {
     return this.geocodeRequest(`${googleUrl}?key=${apiKey}&latlng=${position.lat},${position.lng}`);
   },
 
-  geocodeAddress(apiKey, address) {
+  geocodeAddress(apiKey, address, partial_match) {
     if (!apiKey || !address) {
       return Promise.reject(new Error("invalid apiKey / address"));
     }
 
-    return this.geocodeRequest(`${googleUrl}?key=${apiKey}&address=${encodeURI(address)}&components=country:us`);
+    return this.geocodeRequest(`${googleUrl}?key=${apiKey}&address=${encodeURI(address)}&components=country:us`, partial_match);
   },
 
-  async geocodeRequest(url) {
+  async geocodeRequest(url, partial_match) {
     const res = await fetch(url);
     const json = await res.json();
 
     if (!json.results || json.status !== 'OK') {
       return Promise.reject(new Error(`geocoding error ${json.status}, ${json.error_message}`));
     }
-
-    return json.results.map(format);
+    
+    if (partial_match) {
+      return json.results.map(format);
+    }
+    return json.results.filter((item) => !item.partial_match).map(format);
   }
 }

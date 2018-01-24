@@ -21,11 +21,11 @@ export default {
     });
   },
 
-  geocodeAddress(address) {
+  geocodeAddress(address, partial_match = true) {
     if (!address) {
       return Promise.reject(new Error("address is null"));
     }
 
-    return GoogleApi.geocodeAddress(this.apiKey, address);
+    return GoogleApi.geocodeAddress(this.apiKey, address, partial_match);
   },
 }
